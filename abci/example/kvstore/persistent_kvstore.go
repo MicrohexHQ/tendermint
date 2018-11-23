@@ -30,6 +30,10 @@ type PersistentKVStoreApplication struct {
 	logger log.Logger
 }
 
+func (app *PersistentKVStoreApplication) DeliverTxs(txs [][]byte) []types.ResponseDeliverTx {
+	panic("implement me")
+}
+
 func NewPersistentKVStoreApplication(dbDir string) *PersistentKVStoreApplication {
 	name := "kvstore"
 	db, err := dbm.NewGoLevelDB(name, dbDir)

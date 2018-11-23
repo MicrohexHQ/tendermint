@@ -92,6 +92,23 @@ func (app *localClient) DeliverTxAsync(tx []byte) *ReqRes {
 	)
 }
 
+func (app *localClient) BatchDeliverTxsAsync(txs [][]byte) []*ReqRes {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	res := app.Application.DeliverTxs(txs)
+	result := make([]*ReqRes, len(res))
+
+	for i, r := range res {
+		result[i] = app.callback(
+			types.ToRequestDeliverTx(txs[i]),
+			types.ToResponseDeliverTx(r),
+		)
+	}
+
+	return result
+}
+
 func (app *localClient) CheckTxAsync(tx []byte) *ReqRes {
 	app.mtx.Lock()
 	defer app.mtx.Unlock()

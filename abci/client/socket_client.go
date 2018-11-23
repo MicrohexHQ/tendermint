@@ -39,6 +39,10 @@ type socketClient struct {
 
 }
 
+func (cli *socketClient) BatchDeliverTxsAsync(tx [][]byte) []*ReqRes {
+	panic("implement me")
+}
+
 func NewSocketClient(addr string, mustConnect bool) *socketClient {
 	cli := &socketClient{
 		reqQueue:    make(chan *ReqRes, reqQueueSize),

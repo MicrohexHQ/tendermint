@@ -238,12 +238,14 @@ func execBlockOnProxyApp(
 		return nil, err
 	}
 
-	// Run txs of block.
-	for _, tx := range block.Txs {
-		proxyAppConn.DeliverTxAsync(tx)
-		if err := proxyAppConn.Error(); err != nil {
-			return nil, err
-		}
+	txs := make([][]byte, len(block.Txs))
+	for i, tx := range block.Txs {
+		txs[i] = tx
+	}
+
+	proxyAppConn.BatchDeliverTxsAsync(txs)
+	if err := proxyAppConn.Error(); err != nil {
+		return nil, err
 	}
 
 	// End block.
