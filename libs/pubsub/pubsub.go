@@ -55,7 +55,7 @@ import (
 	"errors"
 	"sync"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 type operation int

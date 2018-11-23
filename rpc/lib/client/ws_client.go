@@ -14,8 +14,8 @@ import (
 	metrics "github.com/rcrowley/go-metrics"
 
 	"github.com/tendermint/go-amino"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	types "github.com/tendermint/tendermint/rpc/lib/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	types "github.com/danil-lashin/tendermint/rpc/lib/types"
 )
 
 const (

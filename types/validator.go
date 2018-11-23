@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/tendermint/tendermint/crypto/tmhash"
+	"github.com/danil-lashin/tendermint/crypto/tmhash"
 
-	"github.com/tendermint/tendermint/crypto"
-	cmn "github.com/tendermint/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/crypto"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 // Volatile state for each Validator

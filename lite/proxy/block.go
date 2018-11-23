@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func ValidateBlockMeta(meta *types.BlockMeta, sh types.SignedHeader) error {

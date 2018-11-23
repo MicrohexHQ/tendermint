@@ -13,8 +13,8 @@ import (
 	"os"
 
 	"github.com/tendermint/go-amino"
-	cs "github.com/tendermint/tendermint/consensus"
-	"github.com/tendermint/tendermint/types"
+	cs "github.com/danil-lashin/tendermint/consensus"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 var cdc = amino.NewCodec()

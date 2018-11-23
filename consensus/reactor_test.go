@@ -14,17 +14,17 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/tendermint/abci/client"
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	abci "github.com/tendermint/tendermint/abci/types"
-	bc "github.com/tendermint/tendermint/blockchain"
-	cfg "github.com/tendermint/tendermint/config"
-	dbm "github.com/tendermint/tendermint/libs/db"
-	"github.com/tendermint/tendermint/libs/log"
-	mempl "github.com/tendermint/tendermint/mempool"
-	"github.com/tendermint/tendermint/p2p"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/abci/client"
+	"github.com/danil-lashin/tendermint/abci/example/kvstore"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	bc "github.com/danil-lashin/tendermint/blockchain"
+	cfg "github.com/danil-lashin/tendermint/config"
+	dbm "github.com/danil-lashin/tendermint/libs/db"
+	"github.com/danil-lashin/tendermint/libs/log"
+	mempl "github.com/danil-lashin/tendermint/mempool"
+	"github.com/danil-lashin/tendermint/p2p"
+	sm "github.com/danil-lashin/tendermint/state"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func init() {

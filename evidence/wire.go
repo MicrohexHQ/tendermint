@@ -2,8 +2,8 @@ package evidence
 
 import (
 	"github.com/tendermint/go-amino"
-	cryptoAmino "github.com/tendermint/tendermint/crypto/encoding/amino"
-	"github.com/tendermint/tendermint/types"
+	cryptoAmino "github.com/danil-lashin/tendermint/crypto/encoding/amino"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 var cdc = amino.NewCodec()

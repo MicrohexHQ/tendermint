@@ -15,19 +15,19 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	abci "github.com/tendermint/tendermint/abci/types"
-	crypto "github.com/tendermint/tendermint/crypto"
-	auto "github.com/tendermint/tendermint/libs/autofile"
-	dbm "github.com/tendermint/tendermint/libs/db"
-	"github.com/tendermint/tendermint/version"
+	"github.com/danil-lashin/tendermint/abci/example/kvstore"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	crypto "github.com/danil-lashin/tendermint/crypto"
+	auto "github.com/danil-lashin/tendermint/libs/autofile"
+	dbm "github.com/danil-lashin/tendermint/libs/db"
+	"github.com/danil-lashin/tendermint/version"
 
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/privval"
-	"github.com/tendermint/tendermint/proxy"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
+	cfg "github.com/danil-lashin/tendermint/config"
+	"github.com/danil-lashin/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/privval"
+	"github.com/danil-lashin/tendermint/proxy"
+	sm "github.com/danil-lashin/tendermint/state"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 var consensusReplayConfig *cfg.Config

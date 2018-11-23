@@ -1,10 +1,10 @@
 package types
 
 import (
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	cmn "github.com/tendermint/tendermint/libs/common"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	"github.com/danil-lashin/tendermint/crypto/merkle"
+	"github.com/danil-lashin/tendermint/crypto/tmhash"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 //-----------------------------------------------------------------------------

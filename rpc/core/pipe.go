@@ -1,17 +1,17 @@
 package core
 
 import (
-	"github.com/tendermint/tendermint/consensus"
-	crypto "github.com/tendermint/tendermint/crypto"
-	dbm "github.com/tendermint/tendermint/libs/db"
-	"github.com/tendermint/tendermint/libs/log"
-	mempl "github.com/tendermint/tendermint/mempool"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/proxy"
-	rpcserver "github.com/tendermint/tendermint/rpc/lib/server"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/state/txindex"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/consensus"
+	crypto "github.com/danil-lashin/tendermint/crypto"
+	dbm "github.com/danil-lashin/tendermint/libs/db"
+	"github.com/danil-lashin/tendermint/libs/log"
+	mempl "github.com/danil-lashin/tendermint/mempool"
+	"github.com/danil-lashin/tendermint/p2p"
+	"github.com/danil-lashin/tendermint/proxy"
+	rpcserver "github.com/danil-lashin/tendermint/rpc/lib/server"
+	sm "github.com/danil-lashin/tendermint/state"
+	"github.com/danil-lashin/tendermint/state/txindex"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 const (

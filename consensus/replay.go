@@ -10,16 +10,16 @@ import (
 	//"strings"
 	"time"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/version"
-	//auto "github.com/tendermint/tendermint/libs/autofile"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	dbm "github.com/tendermint/tendermint/libs/db"
-	"github.com/tendermint/tendermint/libs/log"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	"github.com/danil-lashin/tendermint/version"
+	//auto "github.com/danil-lashin/tendermint/libs/autofile"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	dbm "github.com/danil-lashin/tendermint/libs/db"
+	"github.com/danil-lashin/tendermint/libs/log"
 
-	"github.com/tendermint/tendermint/proxy"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/proxy"
+	sm "github.com/danil-lashin/tendermint/state"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 var crc32c = crc32.MakeTable(crc32.Castagnoli)

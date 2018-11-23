@@ -10,9 +10,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	"github.com/danil-lashin/tendermint/crypto/ed25519"
+	"github.com/danil-lashin/tendermint/types"
+	tmtime "github.com/danil-lashin/tendermint/types/time"
 )
 
 func TestGenLoadValidator(t *testing.T) {

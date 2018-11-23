@@ -1,12 +1,12 @@
 package proxy
 
 import (
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/lite"
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	"github.com/danil-lashin/tendermint/crypto/merkle"
+	"github.com/danil-lashin/tendermint/lite"
+	rpcclient "github.com/danil-lashin/tendermint/rpc/client"
+	ctypes "github.com/danil-lashin/tendermint/rpc/core/types"
 )
 
 var _ rpcclient.Client = Wrapper{}

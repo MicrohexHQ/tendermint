@@ -7,9 +7,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	"github.com/tendermint/tendermint/rpc/grpc"
-	"github.com/tendermint/tendermint/rpc/test"
+	"github.com/danil-lashin/tendermint/abci/example/kvstore"
+	"github.com/danil-lashin/tendermint/rpc/grpc"
+	"github.com/danil-lashin/tendermint/rpc/test"
 )
 
 func TestMain(m *testing.M) {

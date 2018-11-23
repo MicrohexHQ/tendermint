@@ -10,14 +10,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	cstypes "github.com/tendermint/tendermint/consensus/types"
-	tmevents "github.com/tendermint/tendermint/libs/events"
+	cstypes "github.com/danil-lashin/tendermint/consensus/types"
+	tmevents "github.com/danil-lashin/tendermint/libs/events"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/libs/log"
-	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
-	p2pdummy "github.com/tendermint/tendermint/p2p/dummy"
-	"github.com/tendermint/tendermint/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/libs/log"
+	tmpubsub "github.com/danil-lashin/tendermint/libs/pubsub"
+	p2pdummy "github.com/danil-lashin/tendermint/p2p/dummy"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func init() {

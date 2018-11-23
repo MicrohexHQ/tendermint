@@ -8,11 +8,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	"github.com/danil-lashin/tendermint/crypto"
+	"github.com/danil-lashin/tendermint/crypto/ed25519"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/types"
+	tmtime "github.com/danil-lashin/tendermint/types/time"
 )
 
 // TODO: type ?

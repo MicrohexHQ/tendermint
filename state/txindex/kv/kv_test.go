@@ -8,13 +8,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	db "github.com/tendermint/tendermint/libs/db"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	db "github.com/danil-lashin/tendermint/libs/db"
 
-	"github.com/tendermint/tendermint/libs/pubsub/query"
-	"github.com/tendermint/tendermint/state/txindex"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/libs/pubsub/query"
+	"github.com/danil-lashin/tendermint/state/txindex"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func TestTxIndex(t *testing.T) {

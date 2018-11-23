@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/danil-lashin/tendermint/crypto"
+	"github.com/danil-lashin/tendermint/crypto/ed25519"
 )
 
 func TestSignAndValidateEd25519(t *testing.T) {

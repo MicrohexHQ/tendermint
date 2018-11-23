@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	cfg "github.com/danil-lashin/tendermint/config"
+	"github.com/danil-lashin/tendermint/types"
+	tmtime "github.com/danil-lashin/tendermint/types/time"
 )
 
 var config *cfg.Config // NOTE: must be reset for each _test.go file

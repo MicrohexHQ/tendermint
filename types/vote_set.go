@@ -8,7 +8,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 // UNSTABLE

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/pkg/errors"
-	"github.com/tendermint/tendermint/crypto"
-	cmn "github.com/tendermint/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/crypto"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 // Heartbeat is a simple vote-like structure so validators can

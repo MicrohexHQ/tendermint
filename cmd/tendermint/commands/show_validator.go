@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/tendermint/tendermint/privval"
+	"github.com/danil-lashin/tendermint/privval"
 )
 
 // ShowValidatorCmd adds capabilities for showing the validator info.

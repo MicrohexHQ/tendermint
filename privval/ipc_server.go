@@ -5,9 +5,9 @@ import (
 	"net"
 	"time"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 // IPCRemoteSignerOption sets an optional parameter on the IPCRemoteSigner.

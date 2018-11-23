@@ -11,14 +11,14 @@ import (
 
 	"github.com/pkg/errors"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	cfg "github.com/tendermint/tendermint/config"
-	auto "github.com/tendermint/tendermint/libs/autofile"
-	"github.com/tendermint/tendermint/libs/clist"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/proxy"
-	"github.com/tendermint/tendermint/types"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	cfg "github.com/danil-lashin/tendermint/config"
+	auto "github.com/danil-lashin/tendermint/libs/autofile"
+	"github.com/danil-lashin/tendermint/libs/clist"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/proxy"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 // PreCheckFunc is an optional filter executed before CheckTx and rejects

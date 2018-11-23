@@ -8,9 +8,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/tendermint/tendermint/abci/example/code"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/abci/example/code"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func init() {

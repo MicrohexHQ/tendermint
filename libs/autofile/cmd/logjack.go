@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	auto "github.com/tendermint/tendermint/libs/autofile"
-	cmn "github.com/tendermint/tendermint/libs/common"
+	auto "github.com/danil-lashin/tendermint/libs/autofile"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 const Version = "0.0.1"

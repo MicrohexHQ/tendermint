@@ -1,8 +1,8 @@
 package multisig
 
 import (
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/tmhash"
+	"github.com/danil-lashin/tendermint/crypto"
+	"github.com/danil-lashin/tendermint/crypto/tmhash"
 )
 
 // PubKeyMultisigThreshold implements a K of N threshold multisig.

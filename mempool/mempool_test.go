@@ -14,13 +14,13 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/stretchr/testify/require"
-	"github.com/tendermint/tendermint/abci/example/counter"
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	abci "github.com/tendermint/tendermint/abci/types"
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/proxy"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/abci/example/counter"
+	"github.com/danil-lashin/tendermint/abci/example/kvstore"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	cfg "github.com/danil-lashin/tendermint/config"
+	"github.com/danil-lashin/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/proxy"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 func newMempoolWithApp(cc proxy.ClientCreator) *Mempool {

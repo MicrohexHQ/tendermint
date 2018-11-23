@@ -5,10 +5,10 @@ import (
 
 	"github.com/pkg/errors"
 
-	tmquery "github.com/tendermint/tendermint/libs/pubsub/query"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	rpctypes "github.com/tendermint/tendermint/rpc/lib/types"
-	tmtypes "github.com/tendermint/tendermint/types"
+	tmquery "github.com/danil-lashin/tendermint/libs/pubsub/query"
+	ctypes "github.com/danil-lashin/tendermint/rpc/core/types"
+	rpctypes "github.com/danil-lashin/tendermint/rpc/lib/types"
+	tmtypes "github.com/danil-lashin/tendermint/types"
 )
 
 // Subscribe for events via WebSocket.
@@ -43,14 +43,14 @@ import (
 //		tm.event = 'Tx' AND account.owner CONTAINS 'Igor'
 //
 // See list of all possible events here
-// https://godoc.org/github.com/tendermint/tendermint/types#pkg-constants
+// https://godoc.org/github.com/danil-lashin/tendermint/types#pkg-constants
 //
 // For complete query syntax, check out
-// https://godoc.org/github.com/tendermint/tendermint/libs/pubsub/query.
+// https://godoc.org/github.com/danil-lashin/tendermint/libs/pubsub/query.
 //
 // ```go
-// import "github.com/tendermint/tendermint/libs/pubsub/query"
-// import "github.com/tendermint/tendermint/types"
+// import "github.com/danil-lashin/tendermint/libs/pubsub/query"
+// import "github.com/danil-lashin/tendermint/types"
 //
 // client := client.NewHTTP("tcp://0.0.0.0:26657", "/websocket")
 // ctx, cancel := context.WithTimeout(context.Background(), timeout)

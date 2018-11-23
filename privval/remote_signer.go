@@ -7,9 +7,9 @@ import (
 	"sync"
 
 	"github.com/tendermint/go-amino"
-	"github.com/tendermint/tendermint/crypto"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/crypto"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 // RemoteSignerClient implements PrivValidator, it uses a socket to request signatures

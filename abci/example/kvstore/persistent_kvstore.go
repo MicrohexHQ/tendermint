@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/tendermint/tendermint/abci/example/code"
-	"github.com/tendermint/tendermint/abci/types"
-	dbm "github.com/tendermint/tendermint/libs/db"
-	"github.com/tendermint/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/abci/example/code"
+	"github.com/danil-lashin/tendermint/abci/types"
+	dbm "github.com/danil-lashin/tendermint/libs/db"
+	"github.com/danil-lashin/tendermint/libs/log"
 )
 
 const (

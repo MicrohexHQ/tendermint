@@ -3,9 +3,9 @@ package txindex
 import (
 	"context"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 const (

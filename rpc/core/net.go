@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/tendermint/tendermint/p2p"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	"github.com/danil-lashin/tendermint/p2p"
+	ctypes "github.com/danil-lashin/tendermint/rpc/core/types"
 )
 
 // Get network info.

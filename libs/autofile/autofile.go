@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 /* AutoFile usage

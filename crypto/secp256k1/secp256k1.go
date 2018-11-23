@@ -11,7 +11,7 @@ import (
 	amino "github.com/tendermint/go-amino"
 	"golang.org/x/crypto/ripemd160" // forked to github.com/tendermint/crypto
 
-	"github.com/tendermint/tendermint/crypto"
+	"github.com/danil-lashin/tendermint/crypto"
 )
 
 //-------------------------------------

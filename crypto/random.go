@@ -12,7 +12,7 @@ import (
 )
 
 // NOTE: This is ignored for now until we have time
-// to properly review the MixEntropy function - https://github.com/tendermint/tendermint/issues/2099.
+// to properly review the MixEntropy function - https://github.com/danil-lashin/tendermint/issues/2099.
 //
 // The randomness here is derived from xoring a chacha20 keystream with
 // output from crypto/rand's OS Entropy Reader. (Due to fears of the OS'
@@ -26,11 +26,11 @@ func init() {
 	gRandInfo = &randInfo{}
 
 	// TODO: uncomment after reviewing MixEntropy -
-	// https://github.com/tendermint/tendermint/issues/2099
+	// https://github.com/danil-lashin/tendermint/issues/2099
 	// gRandInfo.MixEntropy(randBytes(32)) // Init
 }
 
-// WARNING: This function needs review - https://github.com/tendermint/tendermint/issues/2099.
+// WARNING: This function needs review - https://github.com/danil-lashin/tendermint/issues/2099.
 // Mix additional bytes of randomness, e.g. from hardware, user-input, etc.
 // It is OK to call it multiple times.  It does not diminish security.
 func MixEntropy(seedBytes []byte) {
@@ -52,7 +52,7 @@ func CRandBytes(numBytes int) []byte {
 	return randBytes(numBytes)
 }
 
-/* TODO: uncomment after reviewing MixEntropy - https://github.com/tendermint/tendermint/issues/2099
+/* TODO: uncomment after reviewing MixEntropy - https://github.com/danil-lashin/tendermint/issues/2099
 // This uses the OS and the Seed(s).
 func CRandBytes(numBytes int) []byte {
 	return randBytes(numBytes)
@@ -78,7 +78,7 @@ func CReader() io.Reader {
 	return crand.Reader
 }
 
-/* TODO: uncomment after reviewing MixEntropy - https://github.com/tendermint/tendermint/issues/2099
+/* TODO: uncomment after reviewing MixEntropy - https://github.com/danil-lashin/tendermint/issues/2099
 // Returns a crand.Reader mixed with user-supplied entropy
 func CReader() io.Reader {
 	return gRandInfo
@@ -95,7 +95,7 @@ type randInfo struct {
 }
 
 // You can call this as many times as you'd like.
-// XXX/TODO: review - https://github.com/tendermint/tendermint/issues/2099
+// XXX/TODO: review - https://github.com/danil-lashin/tendermint/issues/2099
 func (ri *randInfo) MixEntropy(seedBytes []byte) {
 	ri.mtx.Lock()
 	defer ri.mtx.Unlock()

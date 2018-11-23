@@ -1,10 +1,10 @@
 package core
 
 import (
-	abci "github.com/tendermint/tendermint/abci/types"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/proxy"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	abci "github.com/danil-lashin/tendermint/abci/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/proxy"
+	ctypes "github.com/danil-lashin/tendermint/rpc/core/types"
 )
 
 // Query the application for some information.

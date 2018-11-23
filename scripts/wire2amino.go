@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/tendermint/go-amino"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	cryptoAmino "github.com/tendermint/tendermint/crypto/encoding/amino"
+	"github.com/danil-lashin/tendermint/crypto/ed25519"
+	cryptoAmino "github.com/danil-lashin/tendermint/crypto/encoding/amino"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/privval"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/p2p"
+	"github.com/danil-lashin/tendermint/privval"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 type GenesisValidator struct {

@@ -12,13 +12,13 @@ import (
 
 	"github.com/go-kit/kit/log/term"
 
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	"github.com/tendermint/tendermint/libs/log"
+	"github.com/danil-lashin/tendermint/abci/example/kvstore"
+	"github.com/danil-lashin/tendermint/libs/log"
 
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/proxy"
-	"github.com/tendermint/tendermint/types"
+	cfg "github.com/danil-lashin/tendermint/config"
+	"github.com/danil-lashin/tendermint/p2p"
+	"github.com/danil-lashin/tendermint/proxy"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 type peerState struct {

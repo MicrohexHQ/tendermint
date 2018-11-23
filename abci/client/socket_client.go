@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tendermint/tendermint/abci/types"
-	cmn "github.com/tendermint/tendermint/libs/common"
+	"github.com/danil-lashin/tendermint/abci/types"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 )
 
 const reqQueueSize = 256 // TODO make configurable

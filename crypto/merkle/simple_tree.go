@@ -1,7 +1,7 @@
 package merkle
 
 import (
-	"github.com/tendermint/tendermint/crypto/tmhash"
+	"github.com/danil-lashin/tendermint/crypto/tmhash"
 )
 
 // simpleHashFromTwoHashes is the basic operation of the Merkle tree: Hash(left | right).

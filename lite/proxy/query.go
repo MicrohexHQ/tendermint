@@ -3,14 +3,14 @@ package proxy
 import (
 	"fmt"
 
-	cmn "github.com/tendermint/tendermint/libs/common"
+	cmn "github.com/danil-lashin/tendermint/libs/common"
 
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/lite"
-	lerr "github.com/tendermint/tendermint/lite/errors"
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	"github.com/tendermint/tendermint/types"
+	"github.com/danil-lashin/tendermint/crypto/merkle"
+	"github.com/danil-lashin/tendermint/lite"
+	lerr "github.com/danil-lashin/tendermint/lite/errors"
+	rpcclient "github.com/danil-lashin/tendermint/rpc/client"
+	ctypes "github.com/danil-lashin/tendermint/rpc/core/types"
+	"github.com/danil-lashin/tendermint/types"
 )
 
 // GetWithProof will query the key on the given node, and verify it has
