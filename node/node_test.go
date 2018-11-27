@@ -12,19 +12,17 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/danil-lashin/tendermint/abci/example/kvstore"
-	"github.com/danil-lashin/tendermint/crypto/ed25519"
-	cmn "github.com/danil-lashin/tendermint/libs/common"
-	"github.com/danil-lashin/tendermint/libs/log"
-	"github.com/danil-lashin/tendermint/p2p"
-	sm "github.com/danil-lashin/tendermint/state"
-	"github.com/danil-lashin/tendermint/version"
-
-	cfg "github.com/danil-lashin/tendermint/config"
-	"github.com/danil-lashin/tendermint/types"
-
-	"github.com/danil-lashin/tendermint/privval"
-	tmtime "github.com/danil-lashin/tendermint/types/time"
+	"github.com/tendermint/tendermint/abci/example/kvstore"
+	cfg "github.com/tendermint/tendermint/config"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	cmn "github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/p2p"
+	"github.com/tendermint/tendermint/privval"
+	sm "github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
+	tmtime "github.com/tendermint/tendermint/types/time"
+	"github.com/tendermint/tendermint/version"
 )
 
 func TestNodeStartStop(t *testing.T) {
