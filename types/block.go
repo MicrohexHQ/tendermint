@@ -275,6 +275,28 @@ func (b *Block) StringShort() string {
 	return fmt.Sprintf("Block#%v", b.Hash())
 }
 
+//-----------------------------------------------------------
+// These methods are for Protobuf Compatibility
+
+// Marshal returns the amino encoding.
+func (b *Block) Marshal() ([]byte, error) {
+	return cdc.MarshalBinaryBare(b)
+}
+
+// MarshalTo calls Marshal and copies to the given buffer.
+func (b *Block) MarshalTo(data []byte) (int, error) {
+	bs, err := b.Marshal()
+	if err != nil {
+		return -1, err
+	}
+	return copy(data, bs), nil
+}
+
+// Unmarshal deserializes from amino encoded form.
+func (b *Block) Unmarshal(bs []byte) error {
+	return cdc.UnmarshalBinaryBare(bs, b)
+}
+
 //-----------------------------------------------------------------------------
 
 // MaxDataBytes returns the maximum size of block's data.
@@ -300,16 +322,17 @@ func MaxDataBytes(maxBytes int64, valsCount, evidenceCount int) int64 {
 }
 
 // MaxDataBytesUnknownEvidence returns the maximum size of block's data when
-// evidence count is unknown. MaxEvidenceBytesPerBlock will be used as the size
+// evidence count is unknown. MaxEvidencePerBlock will be used for the size
 // of evidence.
 //
 // XXX: Panics on negative result.
 func MaxDataBytesUnknownEvidence(maxBytes int64, valsCount int) int64 {
+	_, maxEvidenceBytes := MaxEvidencePerBlock(maxBytes)
 	maxDataBytes := maxBytes -
 		MaxAminoOverheadForBlock -
 		MaxHeaderBytes -
 		int64(valsCount)*MaxVoteBytes -
-		MaxEvidenceBytesPerBlock(maxBytes)
+		maxEvidenceBytes
 
 	if maxDataBytes < 0 {
 		panic(fmt.Sprintf(

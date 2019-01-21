@@ -34,7 +34,7 @@ type EvidenceParams struct {
 }
 
 // ValidatorParams restrict the public key types validators can use.
-// NOTE: uses ABCI pubkey naming, not Amino routes.
+// NOTE: uses ABCI pubkey naming, not Amino names.
 type ValidatorParams struct {
 	PubKeyTypes []string `json:"pub_key_types"`
 }
@@ -69,6 +69,15 @@ func DefaultValidatorParams() ValidatorParams {
 	return ValidatorParams{[]string{ABCIPubKeyTypeEd25519}}
 }
 
+func (params *ValidatorParams) IsValidPubkeyType(pubkeyType string) bool {
+	for i := 0; i < len(params.PubKeyTypes); i++ {
+		if params.PubKeyTypes[i] == pubkeyType {
+			return true
+		}
+	}
+	return false
+}
+
 // Validate validates the ConsensusParams to ensure all values are within their
 // allowed limits, and returns an error if they are not.
 func (params *ConsensusParams) Validate() error {
@@ -98,7 +107,7 @@ func (params *ConsensusParams) Validate() error {
 	// Check if keyType is a known ABCIPubKeyType
 	for i := 0; i < len(params.Validator.PubKeyTypes); i++ {
 		keyType := params.Validator.PubKeyTypes[i]
-		if _, ok := ABCIPubKeyTypesToAminoRoutes[keyType]; !ok {
+		if _, ok := ABCIPubKeyTypesToAminoNames[keyType]; !ok {
 			return cmn.NewError("params.Validator.PubKeyTypes[%d], %s, is an unknown pubkey type",
 				i, keyType)
 		}
@@ -124,19 +133,7 @@ func (params *ConsensusParams) Hash() []byte {
 func (params *ConsensusParams) Equals(params2 *ConsensusParams) bool {
 	return params.BlockSize == params2.BlockSize &&
 		params.Evidence == params2.Evidence &&
-		stringSliceEqual(params.Validator.PubKeyTypes, params2.Validator.PubKeyTypes)
-}
-
-func stringSliceEqual(a, b []string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := 0; i < len(a); i++ {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
+		cmn.StringSliceEqual(params.Validator.PubKeyTypes, params2.Validator.PubKeyTypes)
 }
 
 // Update returns a copy of the params with updates from the non-zero fields of p2.
@@ -157,7 +154,9 @@ func (params ConsensusParams) Update(params2 *abci.ConsensusParams) ConsensusPar
 		res.Evidence.MaxAge = params2.Evidence.MaxAge
 	}
 	if params2.Validator != nil {
-		res.Validator.PubKeyTypes = params2.Validator.PubKeyTypes
+		// Copy params2.Validator.PubkeyTypes, and set result's value to the copy.
+		// This avoids having to initialize the slice to 0 values, and then write to it again.
+		res.Validator.PubKeyTypes = append([]string{}, params2.Validator.PubKeyTypes...)
 	}
 	return res
 }

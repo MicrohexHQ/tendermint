@@ -17,7 +17,7 @@ import (
 
 	"github.com/tendermint/tendermint/abci/example/kvstore"
 	abci "github.com/tendermint/tendermint/abci/types"
-	crypto "github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/crypto"
 	auto "github.com/tendermint/tendermint/libs/autofile"
 	dbm "github.com/tendermint/tendermint/libs/db"
 	"github.com/tendermint/tendermint/version"
@@ -87,7 +87,7 @@ func sendTxs(cs *ConsensusState, ctx context.Context) {
 			return
 		default:
 			tx := []byte{byte(i)}
-			cs.mempool.CheckTx(tx, nil)
+			assertMempool(cs.txNotifier).CheckTx(tx, nil)
 			i++
 		}
 	}
@@ -315,28 +315,21 @@ func testHandshakeReplay(t *testing.T, nBlocks int, mode uint) {
 	config := ResetConfig("proxy_test_")
 
 	walBody, err := WALWithNBlocks(NUM_BLOCKS)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	walFile := tempWALWithData(walBody)
 	config.Consensus.SetWalFile(walFile)
 
-	privVal := privval.LoadFilePV(config.PrivValidatorFile())
+	privVal := privval.LoadFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile())
 
 	wal, err := NewWAL(walFile)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	wal.SetLogger(log.TestingLogger())
-	if err := wal.Start(); err != nil {
-		t.Fatal(err)
-	}
+	err = wal.Start()
+	require.NoError(t, err)
 	defer wal.Stop()
 
 	chain, commits, err := makeBlockchainFromWAL(wal)
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
+	require.NoError(t, err)
 
 	stateDB, state, store := stateAndStore(config, privVal.GetPubKey(), kvstore.ProtocolVersion)
 	store.chain = chain
@@ -640,7 +633,7 @@ func TestInitChainUpdateValidators(t *testing.T) {
 	clientCreator := proxy.NewLocalClientCreator(app)
 
 	config := ResetConfig("proxy_test_")
-	privVal := privval.LoadFilePV(config.PrivValidatorFile())
+	privVal := privval.LoadFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile())
 	stateDB, state, store := stateAndStore(config, privVal.GetPubKey(), 0x0)
 
 	oldValAddr := state.Validators.Validators[0].Address
@@ -664,12 +657,6 @@ func TestInitChainUpdateValidators(t *testing.T) {
 	expectValAddr := val.Address
 	assert.NotEqual(t, oldValAddr, newValAddr)
 	assert.Equal(t, newValAddr, expectValAddr)
-}
-
-func newInitChainApp(vals []abci.ValidatorUpdate) *initChainApp {
-	return &initChainApp{
-		vals: vals,
-	}
 }
 
 // returns the vals on InitChain
