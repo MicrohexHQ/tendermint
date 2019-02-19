@@ -1,13 +1,8 @@
-# Pending
+## v0.31.0
 
-## v0.26.4
-
-*TBD*
+**
 
 Special thanks to external contributors on this release:
-
-Friendly reminder, we have a [bug bounty
-program](https://hackerone.com/tendermint).
 
 ### BREAKING CHANGES:
 
@@ -25,11 +20,17 @@ program](https://hackerone.com/tendermint).
 
 ### IMPROVEMENTS:
 
-- [config] \#2877 add blocktime_iota to the config.toml (@ackratos)
-- [mempool] \#2855 add txs from Update to cache
-- [mempool] \#2835 Remove local int64 counter from being stored in every tx
-- [node] \#2827 add ability to instantiate IPCVal (@joe-bowman)
+- [config] \#3291 Make config.ResetTestRootWithChainID() create concurrency-safe test directories.
 
 ### BUG FIXES:
 
-- [rpc] \#2808 RPC validators calls IncrementAccum if necessary
+* [consensus] \#3297 Flush WAL on stop to prevent data corruption during
+  graceful shutdown
+- [consensus] \#3302 Reset TriggeredTimeoutPrecommit before starting next
+  height
+- [rpc] \#3251 Fix /net_info#peers#remote_ip format. New format spec:
+  * dotted decimal ("192.0.2.1"), if ip is an IPv4 or IP4-mapped IPv6 address
+  * IPv6 ("2001:db8::1"), if ip is a valid IPv6 address
+* [cmd] \#3314 Return an error on `show_validator` when the private validator
+  file does not exist
+* [p2p] \#3321 Authenticate a peer against its NetAddress.ID while dialing 

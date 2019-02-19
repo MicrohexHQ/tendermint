@@ -16,6 +16,11 @@ import (
 //
 // ```go
 // client := client.NewHTTP("tcp://0.0.0.0:26657", "/websocket")
+// err := client.Start()
+// if err != nil {
+//   // handle error
+// }
+// defer client.Stop()
 // state, err := client.Validators()
 // ```
 //
@@ -27,7 +32,7 @@ import (
 // 	"result": {
 // 		"validators": [
 // 			{
-// 				"accum": "0",
+// 				"proposer_priority": "0",
 // 				"voting_power": "10",
 // 				"pub_key": {
 // 					"data": "68DFDA7E50F82946E7E8546BED37944A422CD1B831E70DF66BA3B8430593944D",
@@ -55,7 +60,9 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ctypes.ResultValidators{height, validators.Validators}, nil
+	return &ctypes.ResultValidators{
+		BlockHeight: height,
+		Validators:  validators.Validators}, nil
 }
 
 // DumpConsensusState dumps consensus state.
@@ -67,6 +74,11 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 //
 // ```go
 // client := client.NewHTTP("tcp://0.0.0.0:26657", "/websocket")
+// err := client.Start()
+// if err != nil {
+//   // handle error
+// }
+// defer client.Stop()
 // state, err := client.DumpConsensusState()
 // ```
 //
@@ -92,7 +104,7 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 //               "value": "SBctdhRBcXtBgdI/8a/alTsUhGXqGs9k5ylV1u5iKHg="
 //             },
 //             "voting_power": "10",
-//             "accum": "0"
+//             "proposer_priority": "0"
 //           }
 //         ],
 //         "proposer": {
@@ -102,7 +114,7 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 //             "value": "SBctdhRBcXtBgdI/8a/alTsUhGXqGs9k5ylV1u5iKHg="
 //           },
 //           "voting_power": "10",
-//           "accum": "0"
+//           "proposer_priority": "0"
 //         }
 //       },
 //       "proposal": null,
@@ -138,7 +150,7 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 //               "value": "SBctdhRBcXtBgdI/8a/alTsUhGXqGs9k5ylV1u5iKHg="
 //             },
 //             "voting_power": "10",
-//             "accum": "0"
+//             "proposer_priority": "0"
 //           }
 //         ],
 //         "proposer": {
@@ -148,7 +160,7 @@ func Validators(heightPtr *int64) (*ctypes.ResultValidators, error) {
 //             "value": "SBctdhRBcXtBgdI/8a/alTsUhGXqGs9k5ylV1u5iKHg="
 //           },
 //           "voting_power": "10",
-//           "accum": "0"
+//           "proposer_priority": "0"
 //         }
 //       }
 //     },
@@ -213,7 +225,9 @@ func DumpConsensusState() (*ctypes.ResultDumpConsensusState, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ctypes.ResultDumpConsensusState{roundState, peerStates}, nil
+	return &ctypes.ResultDumpConsensusState{
+		RoundState: roundState,
+		Peers:      peerStates}, nil
 }
 
 // ConsensusState returns a concise summary of the consensus state.
@@ -225,6 +239,11 @@ func DumpConsensusState() (*ctypes.ResultDumpConsensusState, error) {
 //
 // ```go
 // client := client.NewHTTP("tcp://0.0.0.0:26657", "/websocket")
+// err := client.Start()
+// if err != nil {
+//   // handle error
+// }
+// defer client.Stop()
 // state, err := client.ConsensusState()
 // ```
 //
@@ -261,7 +280,7 @@ func DumpConsensusState() (*ctypes.ResultDumpConsensusState, error) {
 func ConsensusState() (*ctypes.ResultConsensusState, error) {
 	// Get self round state.
 	bz, err := consensusState.GetRoundStateSimpleJSON()
-	return &ctypes.ResultConsensusState{bz}, err
+	return &ctypes.ResultConsensusState{RoundState: bz}, err
 }
 
 // Get the consensus parameters  at the given block height.
@@ -273,6 +292,11 @@ func ConsensusState() (*ctypes.ResultConsensusState, error) {
 //
 // ```go
 // client := client.NewHTTP("tcp://0.0.0.0:26657", "/websocket")
+// err := client.Start()
+// if err != nil {
+//   // handle error
+// }
+// defer client.Stop()
 // state, err := client.ConsensusParams()
 // ```
 //
@@ -307,5 +331,7 @@ func ConsensusParams(heightPtr *int64) (*ctypes.ResultConsensusParams, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ctypes.ResultConsensusParams{BlockHeight: height, ConsensusParams: consensusparams}, nil
+	return &ctypes.ResultConsensusParams{
+		BlockHeight:     height,
+		ConsensusParams: consensusparams}, nil
 }

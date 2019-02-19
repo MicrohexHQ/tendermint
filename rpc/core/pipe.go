@@ -2,7 +2,7 @@ package core
 
 import (
 	"github.com/tendermint/tendermint/consensus"
-	crypto "github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/crypto"
 	dbm "github.com/tendermint/tendermint/libs/db"
 	"github.com/tendermint/tendermint/libs/log"
 	mempl "github.com/tendermint/tendermint/mempool"
@@ -149,8 +149,19 @@ func validatePage(page, perPage, totalCount int) int {
 }
 
 func validatePerPage(perPage int) int {
-	if perPage < 1 || perPage > maxPerPage {
+	if perPage < 1 {
 		return defaultPerPage
+	} else if perPage > maxPerPage {
+		return maxPerPage
 	}
 	return perPage
+}
+
+func validateSkipCount(page, perPage int) int {
+	skipCount := (page - 1) * perPage
+	if skipCount < 0 {
+		return 0
+	}
+
+	return skipCount
 }

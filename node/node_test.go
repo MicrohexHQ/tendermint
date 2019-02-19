@@ -13,22 +13,25 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/tendermint/tendermint/abci/example/kvstore"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	cmn "github.com/tendermint/tendermint/libs/common"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/p2p"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/version"
-
 	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/types"
-
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/tendermint/tendermint/evidence"
+	cmn "github.com/tendermint/tendermint/libs/common"
+	dbm "github.com/tendermint/tendermint/libs/db"
+	"github.com/tendermint/tendermint/libs/log"
+	mempl "github.com/tendermint/tendermint/mempool"
+	"github.com/tendermint/tendermint/p2p"
 	"github.com/tendermint/tendermint/privval"
+	"github.com/tendermint/tendermint/proxy"
+	sm "github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
 	tmtime "github.com/tendermint/tendermint/types/time"
+	"github.com/tendermint/tendermint/version"
 )
 
 func TestNodeStartStop(t *testing.T) {
 	config := cfg.ResetTestRoot("node_node_test")
+	defer os.RemoveAll(config.RootDir)
 
 	// create & start node
 	n, err := DefaultNewNode(config, log.TestingLogger())
@@ -86,13 +89,14 @@ func TestSplitAndTrimEmpty(t *testing.T) {
 	}
 }
 
-func TestNodeDelayedStop(t *testing.T) {
-	config := cfg.ResetTestRoot("node_delayed_node_test")
+func TestNodeDelayedStart(t *testing.T) {
+	config := cfg.ResetTestRoot("node_delayed_start_test")
+	defer os.RemoveAll(config.RootDir)
 	now := tmtime.Now()
 
 	// create & start node
 	n, err := DefaultNewNode(config, log.TestingLogger())
-	n.GenesisDoc().GenesisTime = now.Add(5 * time.Second)
+	n.GenesisDoc().GenesisTime = now.Add(2 * time.Second)
 	require.NoError(t, err)
 
 	n.Start()
@@ -102,6 +106,7 @@ func TestNodeDelayedStop(t *testing.T) {
 
 func TestNodeSetAppVersion(t *testing.T) {
 	config := cfg.ResetTestRoot("node_app_version_test")
+	defer os.RemoveAll(config.RootDir)
 
 	// create & start node
 	n, err := DefaultNewNode(config, log.TestingLogger())
@@ -122,27 +127,29 @@ func TestNodeSetPrivValTCP(t *testing.T) {
 	addr := "tcp://" + testFreeAddr(t)
 
 	config := cfg.ResetTestRoot("node_priv_val_tcp_test")
+	defer os.RemoveAll(config.RootDir)
 	config.BaseConfig.PrivValidatorListenAddr = addr
 
-	rs := privval.NewRemoteSigner(
+	dialer := privval.DialTCPFn(addr, 100*time.Millisecond, ed25519.GenPrivKey())
+	pvsc := privval.NewRemoteSigner(
 		log.TestingLogger(),
 		config.ChainID(),
-		addr,
 		types.NewMockPV(),
-		ed25519.GenPrivKey(),
+		dialer,
 	)
-	privval.RemoteSignerConnDeadline(5 * time.Millisecond)(rs)
+	privval.RemoteSignerConnDeadline(100 * time.Millisecond)(pvsc)
+
 	go func() {
-		err := rs.Start()
+		err := pvsc.Start()
 		if err != nil {
 			panic(err)
 		}
 	}()
-	defer rs.Stop()
+	defer pvsc.Stop()
 
 	n, err := DefaultNewNode(config, log.TestingLogger())
 	require.NoError(t, err)
-	assert.IsType(t, &privval.TCPVal{}, n.PrivValidator())
+	assert.IsType(t, &privval.SocketVal{}, n.PrivValidator())
 }
 
 // address without a protocol must result in error
@@ -150,6 +157,7 @@ func TestPrivValidatorListenAddrNoProtocol(t *testing.T) {
 	addrNoPrefix := testFreeAddr(t)
 
 	config := cfg.ResetTestRoot("node_priv_val_tcp_test")
+	defer os.RemoveAll(config.RootDir)
 	config.BaseConfig.PrivValidatorListenAddr = addrNoPrefix
 
 	_, err := DefaultNewNode(config, log.TestingLogger())
@@ -161,29 +169,28 @@ func TestNodeSetPrivValIPC(t *testing.T) {
 	defer os.Remove(tmpfile) // clean up
 
 	config := cfg.ResetTestRoot("node_priv_val_tcp_test")
+	defer os.RemoveAll(config.RootDir)
 	config.BaseConfig.PrivValidatorListenAddr = "unix://" + tmpfile
 
-	rs := privval.NewIPCRemoteSigner(
+	dialer := privval.DialUnixFn(tmpfile)
+	pvsc := privval.NewRemoteSigner(
 		log.TestingLogger(),
 		config.ChainID(),
-		tmpfile,
 		types.NewMockPV(),
+		dialer,
 	)
-	privval.IPCRemoteSignerConnDeadline(3 * time.Second)(rs)
+	privval.RemoteSignerConnDeadline(100 * time.Millisecond)(pvsc)
 
-	done := make(chan struct{})
 	go func() {
-		defer close(done)
-		n, err := DefaultNewNode(config, log.TestingLogger())
+		err := pvsc.Start()
 		require.NoError(t, err)
-		assert.IsType(t, &privval.IPCVal{}, n.PrivValidator())
 	}()
+	defer pvsc.Stop()
 
-	err := rs.Start()
+	n, err := DefaultNewNode(config, log.TestingLogger())
 	require.NoError(t, err)
-	defer rs.Stop()
+	assert.IsType(t, &privval.SocketVal{}, n.PrivValidator())
 
-	<-done
 }
 
 // testFreeAddr claims a free port so we don't block on listener being ready.
@@ -193,4 +200,110 @@ func testFreeAddr(t *testing.T) string {
 	defer ln.Close()
 
 	return fmt.Sprintf("127.0.0.1:%d", ln.Addr().(*net.TCPAddr).Port)
+}
+
+// create a proposal block using real and full
+// mempool and evidence pool and validate it.
+func TestCreateProposalBlock(t *testing.T) {
+	config := cfg.ResetTestRoot("node_create_proposal")
+	defer os.RemoveAll(config.RootDir)
+	cc := proxy.NewLocalClientCreator(kvstore.NewKVStoreApplication())
+	proxyApp := proxy.NewAppConns(cc)
+	err := proxyApp.Start()
+	require.Nil(t, err)
+	defer proxyApp.Stop()
+
+	logger := log.TestingLogger()
+
+	var height int64 = 1
+	state, stateDB := state(1, height)
+	maxBytes := 16384
+	state.ConsensusParams.BlockSize.MaxBytes = int64(maxBytes)
+	proposerAddr, _ := state.Validators.GetByIndex(0)
+
+	// Make Mempool
+	memplMetrics := mempl.PrometheusMetrics("node_test")
+	mempool := mempl.NewMempool(
+		config.Mempool,
+		proxyApp.Mempool(),
+		state.LastBlockHeight,
+		mempl.WithMetrics(memplMetrics),
+		mempl.WithPreCheck(sm.TxPreCheck(state)),
+		mempl.WithPostCheck(sm.TxPostCheck(state)),
+	)
+	mempool.SetLogger(logger)
+
+	// Make EvidencePool
+	types.RegisterMockEvidencesGlobal() // XXX!
+	evidence.RegisterMockEvidences()
+	evidenceDB := dbm.NewMemDB()
+	evidencePool := evidence.NewEvidencePool(stateDB, evidenceDB)
+	evidencePool.SetLogger(logger)
+
+	// fill the evidence pool with more evidence
+	// than can fit in a block
+	minEvSize := 12
+	numEv := (maxBytes / types.MaxEvidenceBytesDenominator) / minEvSize
+	for i := 0; i < numEv; i++ {
+		ev := types.NewMockRandomGoodEvidence(1, proposerAddr, cmn.RandBytes(minEvSize))
+		err := evidencePool.AddEvidence(ev)
+		assert.NoError(t, err)
+	}
+
+	// fill the mempool with more txs
+	// than can fit in a block
+	txLength := 1000
+	for i := 0; i < maxBytes/txLength; i++ {
+		tx := cmn.RandBytes(txLength)
+		err := mempool.CheckTx(tx, nil)
+		assert.NoError(t, err)
+	}
+
+	blockExec := sm.NewBlockExecutor(
+		stateDB,
+		logger,
+		proxyApp.Consensus(),
+		mempool,
+		evidencePool,
+	)
+
+	commit := types.NewCommit(types.BlockID{}, nil)
+	block, _ := blockExec.CreateProposalBlock(
+		height,
+		state, commit,
+		proposerAddr,
+	)
+
+	err = blockExec.ValidateBlock(state, block)
+	assert.NoError(t, err)
+}
+
+func state(nVals int, height int64) (sm.State, dbm.DB) {
+	vals := make([]types.GenesisValidator, nVals)
+	for i := 0; i < nVals; i++ {
+		secret := []byte(fmt.Sprintf("test%d", i))
+		pk := ed25519.GenPrivKeyFromSecret(secret)
+		vals[i] = types.GenesisValidator{
+			pk.PubKey().Address(),
+			pk.PubKey(),
+			1000,
+			fmt.Sprintf("test%d", i),
+		}
+	}
+	s, _ := sm.MakeGenesisState(&types.GenesisDoc{
+		ChainID:    "test-chain",
+		Validators: vals,
+		AppHash:    nil,
+	})
+
+	// save validators to db for 2 heights
+	stateDB := dbm.NewMemDB()
+	sm.SaveState(stateDB, s)
+
+	for i := 1; i < int(height); i++ {
+		s.LastBlockHeight++
+		s.LastValidators = s.Validators.Copy()
+		sm.SaveState(stateDB, s)
+	}
+	return s, stateDB
 }
