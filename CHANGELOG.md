@@ -1,5 +1,52 @@
 # Changelog
 
+## v0.30.2
+
+*March 10th, 2019*
+
+This release fixes a CLevelDB memory leak. It was happening because we were not
+closing the WriteBatch object after use. See [levigo's
+godoc](https://godoc.org/github.com/jmhodges/levigo#WriteBatch.Close) for the
+Close method. Special thanks goes to @Stumble who both reported an issue in
+[cosmos-sdk](https://github.com/cosmos/cosmos-sdk/issues/3842) and provided a
+fix here.
+
+### BREAKING CHANGES:
+
+* Go API
+- [libs/db] [\#3842](https://github.com/cosmos/cosmos-sdk/issues/3842) Add Close() method to Batch interface (@Stumble)
+
+### BUG FIXES:
+- [libs/db] [\#3842](https://github.com/cosmos/cosmos-sdk/issues/3842) Fix CLevelDB memory leak (@Stumble)
+
+## v0.30.1
+
+*February 20th, 2019*
+
+This release fixes a consensus halt and a DataCorruptionError after restart
+discovered in `game_of_stakes_6`. It also fixes a security issue in the p2p
+handshake by authenticating the NetAddress.ID of the peer we're dialing.
+
+### IMPROVEMENTS:
+
+* [config] [\#3291](https://github.com/tendermint/tendermint/issues/3291) Make
+  config.ResetTestRootWithChainID() create concurrency-safe test directories.
+
+### BUG FIXES:
+
+* [consensus] [\#3295](https://github.com/tendermint/tendermint/issues/3295)
+  Flush WAL on stop to prevent data corruption during graceful shutdown.
+* [consensus] [\#3302](https://github.com/tendermint/tendermint/issues/3302)
+  Fix possible halt by resetting TriggeredTimeoutPrecommit before starting next height.
+* [rpc] [\#3251](https://github.com/tendermint/tendermint/issues/3251) Fix
+  `/net_info#peers#remote_ip` format. New format spec:
+  * dotted decimal ("192.0.2.1"), if ip is an IPv4 or IP4-mapped IPv6 address
+  * IPv6 ("2001:db8::1"), if ip is a valid IPv6 address
+* [cmd] [\#3314](https://github.com/tendermint/tendermint/issues/3314) Return
+  an error on `show_validator` when the private validator file does not exist.
+* [p2p] [\#3010](https://github.com/tendermint/tendermint/issues/3010#issuecomment-464287627)
+  Authenticate a peer against its NetAddress.ID when dialing.
+
 ## v0.30.0
 
 *February 8th, 2019*
